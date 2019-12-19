@@ -18,7 +18,10 @@ export default function App() {
         <Route path="/" exact component={HomePage} />
         <Route path="/courses" component={CoursesPage} />
         <Route path="/about" component={AboutPage} />
+        {/* Note that the order matters if you declare /course before /course/:slug
+        it will never be reached */}
         <Route path="/course/:slug" component={ManageCoursePage} />
+        <Route path="/course" component={ManageCoursePage} />
         {/* Using Redirect component to go to about path from every /about-page call */}
         <Redirect from="/about-page" to="about" />
         <Route component={PageNotFound} />
