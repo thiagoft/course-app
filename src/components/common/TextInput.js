@@ -21,7 +21,7 @@ export default function TextInput(props) {
           id={props.id}
           type="text"
           onChange={props.onChange}
-          name="title"
+          name={props.name}
           className="form-control"
           value={props.value}
         />
