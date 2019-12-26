@@ -7,10 +7,13 @@ import CoursesPage from "./CoursesPage";
 import { Route, Switch, Redirect } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
 import ManageCoursePage from "./ManageCoursePage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
     <div className="container-fluid">
+      <ToastContainer autoClose={3000} hideProgressBar />
       <Header />
       <Switch>
         {/* Switch component allows you to set a default when any patches do not match

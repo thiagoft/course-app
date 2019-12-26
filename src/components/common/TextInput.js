@@ -14,7 +14,7 @@ export default function TextInput(props) {
   }
 
   return (
-    <div className="wrapperClass">
+    <div className={wrapperClass}>
       <label htmlFor={props.id}>{props.label}</label>
       <div className="field">
         <input
@@ -26,7 +26,7 @@ export default function TextInput(props) {
           value={props.value}
         />
       </div>
-      {props.err && <div className="alert alert-danger">{props.error}</div>}
+      {props.error && <div className="alert alert-danger">{props.error}</div>}
       {/* The && operator like this executes the block on the right when the left is true */}
     </div>
   );
