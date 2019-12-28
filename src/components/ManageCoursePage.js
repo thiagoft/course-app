@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CourseForm from "./CourseForm";
 import * as courseApi from "../api/courseApi";
 import { toast } from "react-toastify";
@@ -13,6 +13,14 @@ const ManageCoursePage = props => {
     authorId: null,
     category: ""
   });
+
+  useEffect(() => {
+    const slug = props.match.params.slug; // from the path "/course/:slug"
+
+    if (slug) {
+      courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+    }
+  }, [props.match.params.slug]);
 
   // function handlerChange(event) {
   // using destructuring
