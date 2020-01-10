@@ -1,7 +1,9 @@
 import { EventEmitter } from "events";
-import Dispatcher from "../appDispatcher/Dispatcher";
+import Dispatcher from "../appDispatcher";
+import actionTypes from "../actions/actionTypes";
 
 const CHANGE_EVENT = "change";
+let _courses = [];
 
 class CourseStore extends EventEmitter {
   addChangeListener(callback) {
@@ -15,6 +17,14 @@ class CourseStore extends EventEmitter {
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
+
+  getCourses() {
+    return _courses;
+  }
+
+  getCourseBySlug(slug) {
+    return _courses.find(course => course.slug === slug);
+  }
 }
 
 const store = new CourseStore();
@@ -23,7 +33,16 @@ const store = new CourseStore();
 // we can reclare it out of the class.
 Dispatcher.register(action => {
   switch (action.actionType) {
+    case actionTypes.CREATE_COURSE:
+      _courses.push(action.course);
+      store.emitChange();
+      break;
+    default:
+    //nothing to do
   }
 });
+// OBS: every action dispatched will be triggered for
+// every registered store so if the action don't match with any action
+// store, there is not anything to do.
 
 export default store;
