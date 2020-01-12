@@ -7,6 +7,7 @@ import * as courseActions from "../actions/courseActions";
 // Declaring React component with arrow Function
 const ManageCoursePage = props => {
   const [errors, setErrors] = useState({});
+  const [courses, setCourses] = useState(courseStore.getCourses());
   const [course, setCourse] = useState({
     id: null,
     slug: "",
@@ -16,12 +17,21 @@ const ManageCoursePage = props => {
   });
 
   useEffect(() => {
+    courseStore.addChangeListener(onChange);
     const slug = props.match.params.slug; // from the path "/course/:slug"
 
-    if (slug) {
+    if (courses.length === 0) {
+      courseActions.loadCourse();
+    } else if (slug) {
       setCourse(courseStore.getCourseBySlug(slug));
     }
-  }, [props.match.params.slug]);
+
+    return () => courseStore.removeChangeListener(onChange);
+  }, [courses.length, props.match.params.slug]);
+
+  function onChange() {
+    setCourses(courseStore.getCourses());
+  }
 
   // function handlerChange(event) {
   // using destructuring
